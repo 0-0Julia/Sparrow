@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Foundation.master.cs" Inherits="Sparrow.Foundation" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">     
+    <title></title>
+    <link rel="icon" type="image/svg+xmal" href="\pictures/Sparrow_Logo.png" />
+    <script src="https://kit.fontawesome.com/a950d11104.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/css.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <style>
+        .gradient {
+             background-image: url(pictures/pexels-monique-laats-733090.jpg);
+             background-color:#466862;
+             background-size: cover;
+             background-repeat: no-repeat;
+             text-align: center;
+             background-position: center;
+             background-attachment: fixed;
+        }
+        .width{
+            width:100%;
+        }
+    </style>
+
+<asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="gradient" runat="server">
+        <div> 
+             <nav id="nav" style=" background-image:url(pictures/feather.jpg); background-size: cover; background-repeat:no-repeat;">
+             <div id="navbtn" class="navbtn">
+                 <div class="menuicondiv" id="humburger"><i class="fas fa-align-justify menuicon"></i></div>
+             </div>   
+                      <div class="width">
+                        <%
+                            if (Session["username"] != null)
+                            {
+                                string username= (string)Session["username"];
+
+                                Response.Write("<div class='fontsize2'><i class='fas fa-user-circle'></i> Welcome Back, " + username +"</div>");
+                                Response.Write("<div class='fontsize3'> Users Online: " + (int)Application["usercount"] +"</div>");
+                                Response.Write("<button class='custom-btn btn-8' href='HomePage.aspx'><span>Home Page</span></button>");
+                                Response.Write("<button class='custom-btn btn-8' href='update_profile.aspx'><span>Update Profile</span></button>");
+                                if (MyAdoHelper.IsAdmin(username))
+                                {
+                                    Session["admin"] = 1;
+                                    Response.Write("<button class='custom-btn btn-8' href='AdminPage.aspx'><span>Admin Page</span></button>");
+                                    //Response.Write("<a href='AddUser.aspx'><div class='btn fontsize menubtn'>User Adding</div></a>"); change placement
+                                }
+                                //if(MyAdoHelper.IsAdmin(username)||MyAdoHelper.IsWriter(username))
+                                   //Response.Write("<a href='AddPost.aspx'><div class='btn fontsize menubtn'>Add A Post</div></a>"); change placement
+
+                            }
+                            else
+                            {
+                                Response.Write("<div class='fontsize2'><i class='fas fa-user-circle'></i> Hello, Guest</div>");
+                                Response.Write("<div class='fontsize3'> Users online: " + (int)Application["usercount"] +"</div>");
+                                Response.Write("<button class='custom-btn btn-8' href='HomePage.aspx'><span>Home Page</span></button>");
+                            }
+                            %>
+                          <div class="position"><div class="fontsize"><i class="fa-solid fa-dove"> Home</i></div>
+                        <%=Home %>
+                          </div><div class="position"><div class="fontsize"><i class="fa-solid fa-crow"> Farm</i></div>
+                        <%=Aviary %>
+                          </div>
+                              <div class="position"><div class="fontsize"><i class="fas fa-kiwi-bird"> Exotics</i></div>
+                        <%=Exotic %>
+                              </div>
+                          <br />
+                          <a href="BirdCalculator.aspx"><div class="btn menubtn fontsize someMarging"> Bird Calculator </div></a>
+                        <%
+                            if (Session["username"] != null)
+                            {
+                                Response.Write("<button class='custom-btn btn-8' href='Log_Out.aspx'><span>Log Out</span></button>");
+                            }
+                            else
+                            {
+                                 Response.Write("<button class='custom-btn btn-8' href='SignUp.aspx'><span>Sign Up</span></button>");
+                                 Response.Write("<button class='custom-btn btn-8' href='SignIn.aspx'><span>Sign In</span></button>");
+                            }
+                        %>
+                        <br />
+             </div>
+
+             </nav>
+   
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+              
+            </asp:ContentPlaceHolder>
+    </div>
+</body>
+</html>
+
